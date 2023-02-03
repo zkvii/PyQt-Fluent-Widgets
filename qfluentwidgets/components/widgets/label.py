@@ -1,6 +1,8 @@
 # coding:utf-8
 import warnings
 
+import warnings
+
 from PySide2.QtCore import Qt, QThread, Signal
 from PySide2.QtGui import QBrush, QColor, QImage, QPainter, QPixmap
 from PySide2.QtWidgets import QLabel

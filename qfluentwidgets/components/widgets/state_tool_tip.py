@@ -1,10 +1,10 @@
 # coding:utf-8
 from PySide2.QtCore import QEasingCurve, QPropertyAnimation, Qt, QTimer, Signal, QSize, QPoint, QRectF
-from PySide2.QtGui import QPainter, QPixmap
+from PySide2.QtGui import QPainter
 from PySide2.QtWidgets import QLabel, QWidget, QToolButton, QGraphicsOpacityEffect
-from PySide2.QtSvg import QSvgRenderer, QSvgWidget
+from PySide2.QtSvg import QSvgWidget
 
-from ...common import setStyleSheet
+from ...common import setStyleSheet, drawSvgIcon
 
 
 class StateToolTip(QWidget):
@@ -129,11 +129,9 @@ class StateToolTip(QWidget):
         if not self.isDone:
             painter.translate(19, 18)
             painter.rotate(self.rotateAngle)
-            render = QSvgRenderer(self.busyIconPath, self)
-            render.render(painter, QRectF(-8, -8, 16, 16))
+            drawSvgIcon(self.busyIconPath, painter, QRectF(-8, -8, 16, 16))
         else:
-            render = QSvgRenderer(self.doneIconPath, self)
-            render.render(painter, QRectF(11, 10, 16, 16))
+            drawSvgIcon(self.doneIconPath, painter, QRectF(11, 10, 16, 16))
 
 
 class ToastToolTip(QWidget):
