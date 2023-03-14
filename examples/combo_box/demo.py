@@ -2,7 +2,8 @@
 import sys
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QWidget
-from qfluentwidgets import ComboBox
+from qfluentwidgets import ComboBox, setTheme, Theme
+
 
 class Demo(QWidget):
 
@@ -15,8 +16,11 @@ class Demo(QWidget):
         self.comboBox.currentTextChanged.connect(print)
         self.comboBox.move(200, 200)
 
+
         self.resize(500, 500)
         self.setStyleSheet('Demo{background:white}')
+
+        # setTheme(Theme.DARK)
 
 
 if __name__ == '__main__':

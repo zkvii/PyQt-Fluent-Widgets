@@ -3,7 +3,7 @@ import sys
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QWidget, QPushButton
 
-from qfluentwidgets import MessageDialog
+from qfluentwidgets import MessageDialog, MessageBox, setTheme, Theme
 
 
 class Window(QWidget):
@@ -17,10 +17,13 @@ class Window(QWidget):
         with open('resource/demo.qss', encoding='utf-8') as f:
             self.setStyleSheet(f.read())
 
+        # setTheme(Theme.DARK)
+
     def showDialog(self):
         title = 'Are you sure you want to delete the folder?'
         content = """If you delete the "Music" folder from the list, the folder will no longer appear in the list, but will not be deleted."""
-        w = MessageDialog(title, content, self)
+        # w = MessageDialog(title, content, self)   # Win10 style message box
+        w = MessageBox(title, content, self)
         if w.exec():
             print('Yes button is pressed')
         else:

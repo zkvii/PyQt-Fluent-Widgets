@@ -5,7 +5,7 @@ from math import cos, pi
 
 from PySide2.QtCore import QDateTime, Qt, QTimer, QPoint, QPointF
 from PySide2.QtGui import QWheelEvent
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QAbstractScrollArea
 
 
 class SmoothScroll:
@@ -41,7 +41,7 @@ class SmoothScroll:
 
     def wheelEvent(self, e):
         if self.smoothMode == SmoothMode.NO_SMOOTH:
-            self.widget.wheelEvent(e)
+            QAbstractScrollArea.wheelEvent(self.widget, e)
             return
 
         # push current time to queque
