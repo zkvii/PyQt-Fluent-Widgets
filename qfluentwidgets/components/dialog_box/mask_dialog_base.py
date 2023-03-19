@@ -77,7 +77,6 @@ class MaskDialogBase(QDialog):
     def eventFilter(self, obj, e: QEvent):
         if obj is self.window():
             if e.type() == QEvent.Resize:
-                re = QResizeEvent(e)
-                self.resize(re.size())
+                self.resize(e.size())
 
         return super().eventFilter(obj, e)
