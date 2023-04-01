@@ -4,6 +4,7 @@ from PySide2.QtGui import QPainter
 from PySide2.QtWidgets import QLineEdit, QToolButton
 
 from ...common.style_sheet import setStyleSheet
+from ...common.icon import writeSvg, isDarkTheme, drawSvgIcon
 from ...common.icon import FluentIcon as FIF
 from .menu import LineEditMenu
 
@@ -23,7 +24,11 @@ class ClearButton(QToolButton):
         super().paintEvent(e)
         painter = QPainter(self)
         painter.setRenderHints(QPainter.Antialiasing | QPainter.SmoothPixmapTransform)
-        FIF.CLOSE.render(painter, QRectF(9.5, 7, 10, 10))
+        if isDarkTheme():
+            FIF.CLOSE.render(painter, QRectF(9.5, 7, 10, 10))
+        else:
+            svg = writeSvg(FIF.CLOSE.path(), fill='#656565')
+            drawSvgIcon(svg.encode(), painter, QRectF(9.5, 7, 10, 10))
 
 
 class LineEdit(QLineEdit):
@@ -47,6 +52,10 @@ class LineEdit(QLineEdit):
     def setClearButtonEnabled(self, enable: bool):
         self._isClearButtonEnabled = enable
         self.setTextMargins(0, 0, 28*enable, 0)
+
+    def contextMenuEvent(self, e):
+        menu = LineEditMenu(self)
+        menu.exec(e.globalPos())
 
     def isClearButtonEnabled(self) -> bool:
         return self._isClearButtonEnabled

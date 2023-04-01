@@ -2,7 +2,7 @@
 from qframelesswindow import WindowEffect
 from PySide2.QtCore import (QEasingCurve, QEvent, QPropertyAnimation, QRect,
                           Qt, QSize, QRectF, Signal, QPoint, QTimer)
-from PySide2.QtGui import QIcon, QColor, QPainter, QPen, QPixmap, QRegion, QCursor
+from PySide2.QtGui import QIcon, QColor, QPainter, QPen, QPixmap, QRegion, QCursor, QGuiApplication
 from PySide2.QtWidgets import (QApplication, QAction, QMenu, QProxyStyle, QStyle,
                                QGraphicsDropShadowEffect, QListWidget, QWidget, QHBoxLayout,
                                QListWidgetItem)
@@ -666,7 +666,8 @@ class LineEditMenu(RoundMenu):
         self.clear()
         self.createActions()
 
-        if QApplication.clipboard().mimeData().hasText():
+        clipboard = QGuiApplication.clipboard()
+        if clipboard.mimeData().hasText():
             if self.parent().text():
                 if self.parent().selectedText():
                     self.addActions(self.action_list)

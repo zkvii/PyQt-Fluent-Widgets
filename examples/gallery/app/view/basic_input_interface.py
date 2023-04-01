@@ -1,8 +1,6 @@
 # coding:utf-8
-from PySide2.QtCore import Qt, QSize, QUrl
+from PySide2.QtCore import Qt, QSize
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QButtonGroup
-from PySide2.QtMultimedia import QSoundEffect
-from PySide2.QtMultimedia import QMediaPlayer, QAudioOutput, QSound
 from qfluentwidgets import (PushButton, ToolButton, PrimaryPushButton, HyperlinkButton,
                             ComboBox, RadioButton, CheckBox, Slider, SwitchButton)
 
@@ -32,10 +30,6 @@ class BasicInputInterface(GalleryInterface):
         button = ToolButton('app/resource/images/kunkun.png')
         button.setIconSize(QSize(40, 40))
         button.resize(70, 70)
-
-        self.player = QSound('app/resource/audio/ZhiYinJi.wav')
-        # button.clicked.connect(self.player.play)
-
         self.addExampleCard(
             self.tr('A button with graphical content'),
             button,

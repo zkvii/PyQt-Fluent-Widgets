@@ -147,9 +147,6 @@ class ColorLineEdit(LineEdit):
         if state == QIntValidator.Acceptable:
             self.valueChanged.emit(text)
 
-    def contextMenuEvent(self, e):
-        return
-
 
 class HexColorLineEdit(ColorLineEdit):
     """ Hex color line edit """
