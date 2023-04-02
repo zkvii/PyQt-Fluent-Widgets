@@ -2,15 +2,15 @@
 import sys
 from PySide2.QtCore import QEasingCurve, Qt
 from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QApplication, QLabel
-from qfluentwidgets import SmoothScrollArea
+from PySide2.QtWidgets import QApplication
+from qfluentwidgets import SmoothScrollArea, PixmapLabel
 
 
 class Demo(SmoothScrollArea):
 
     def __init__(self):
         super().__init__()
-        self.label = QLabel(self)
+        self.label = PixmapLabel(self)
         self.label.setPixmap(QPixmap("resource/shoko.jpg"))
 
         # customize scroll animation
