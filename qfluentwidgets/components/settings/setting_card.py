@@ -275,9 +275,10 @@ class ColorPickerButton(QToolButton):
 
     colorChanged = Signal(QColor)
 
-    def __init__(self, color: QColor, title: str, parent=None):
+    def __init__(self, color: QColor, title: str, parent=None, enableAlpha=False):
         super().__init__(parent=parent)
         self.title = title
+        self.enableAlpha = enableAlpha
         self.setFixedSize(96, 32)
         self.setAttribute(Qt.WA_TranslucentBackground)
 
@@ -288,8 +289,7 @@ class ColorPickerButton(QToolButton):
     def __showColorDialog(self):
         """ show color dialog """
         w = ColorDialog(self.color, self.tr(
-            'Choose ')+self.title, self.window())
-        w.updateStyle()
+            'Choose ')+self.title, self.window(), self.enableAlpha)
         w.colorChanged.connect(self.__onColorChanged)
         w.exec()
 
@@ -309,7 +309,12 @@ class ColorPickerButton(QToolButton):
         pc = QColor(255, 255, 255, 10) if isDarkTheme(
         ) else QColor(234, 234, 234)
         painter.setPen(pc)
-        painter.setBrush(self.color)
+
+        color = QColor(self.color)
+        if not self.enableAlpha:
+            color.setAlpha(255)
+
+        painter.setBrush(color)
         painter.drawRoundedRect(self.rect().adjusted(1, 1, -1, -1), 5, 5)
 
 
@@ -319,7 +324,8 @@ class ColorSettingCard(SettingCard):
 
     colorChanged = Signal(QColor)
 
-    def __init__(self, configItem, icon: Union[str, QIcon, FluentIconBase], title, content=None, parent=None):
+    def __init__(self, configItem, icon: Union[str, QIcon, FluentIconBase],
+                 title: str, content: str = None, parent=None, enableAlpha=False):
         """
         Parameters
         ----------
@@ -337,11 +343,14 @@ class ColorSettingCard(SettingCard):
 
         parent: QWidget
             parent widget
+
+        enableAlpha: bool
+            whether to enable the alpha channel
         """
         super().__init__(icon, title, content, parent)
         self.configItem = configItem
         self.colorPicker = ColorPickerButton(
-            qconfig.get(configItem), title, self)
+            qconfig.get(configItem), title, self, enableAlpha)
         self.hBoxLayout.addWidget(self.colorPicker, 0, Qt.AlignRight)
         self.hBoxLayout.addSpacing(16)
         self.colorPicker.colorChanged.connect(self.__onColorChanged)
