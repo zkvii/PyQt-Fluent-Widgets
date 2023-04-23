@@ -17,6 +17,7 @@ setuptools.setup(
     url="https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide2",
     packages=setuptools.find_packages(),
     install_requires=[
+        "PySide2>=5.15.0",
         "PySide2-Frameless-Window",
         "darkdetect",
     ],
