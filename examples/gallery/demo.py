@@ -3,6 +3,7 @@ import os
 import sys
 
 from PySide2.QtCore import Qt, QTranslator
+from PySide2.QtGui import QFont
 from PySide2.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
@@ -24,6 +25,11 @@ QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 # create application
 app = QApplication(sys.argv)
 app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
+
+# font anti aliasing
+font = app.font()
+font.setHintingPreference(QFont.PreferNoHinting)
+app.setFont(font)
 
 # internationalization
 locale = cfg.get(cfg.language).value
