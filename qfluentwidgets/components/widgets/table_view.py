@@ -2,7 +2,7 @@
 from typing import List
 
 from PySide2.QtCore import Qt, QMargins, QModelIndex
-from PySide2.QtGui import QPainter, QColor, QKeyEvent
+from PySide2.QtGui import QPainter, QColor, QKeyEvent, QPalette
 from PySide2.QtWidgets import (QStyledItemDelegate, QApplication, QStyleOptionViewItem,
                              QTableView, QTableWidget, QWidget)
 
@@ -70,6 +70,15 @@ class TableItemDelegate(QStyledItemDelegate):
             rect = option.rect.adjusted(-1, 0, 1, 0)
             painter.drawRect(rect)
 
+    def initStyleOption(self, option: QStyleOptionViewItem, index: QModelIndex):
+        super().initStyleOption(option, index)
+        if isDarkTheme():
+            option.palette.setColor(QPalette.Text, Qt.white)
+            option.palette.setColor(QPalette.HighlightedText, Qt.white)
+        else:
+            option.palette.setColor(QPalette.Text, Qt.black)
+            option.palette.setColor(QPalette.HighlightedText, Qt.black)
+
     def paint(self, painter, option, index):
         painter.save()
         painter.setPen(Qt.NoPen)
@@ -124,7 +133,8 @@ class TableItemDelegate(QStyledItemDelegate):
 class TableBase:
     """ Table base class """
 
-    def _initView(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.delegate = TableItemDelegate(self)
         self.scrollDelagate = SmoothScrollDelegate(self)
 
@@ -184,13 +194,16 @@ class TableBase:
         else:
             self.setPressedRow(-1)
 
+    def setItemDelegate(self, delegate: TableItemDelegate):
+        self.delegate = delegate
+        super().setItemDelegate(delegate)
+
 
 class TableWidget(TableBase, QTableWidget):
     """ Table widget """
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._initView()
 
 
 class TableView(TableBase, QTableView):
