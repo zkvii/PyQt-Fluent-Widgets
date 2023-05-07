@@ -47,8 +47,6 @@ class TreeViewBase:
     def _initView(self):
         self.scrollDelagate = SmoothScrollDelegate(self)
 
-        self.setHorizontalScrollMode(QTreeView.ScrollPerPixel)
-        self.setVerticalScrollMode(QTreeView.ScrollPerPixel)
         self.setItemDelegate(TreeItemDelegate(self))
         self.setIconSize(QSize(16, 16))
 
